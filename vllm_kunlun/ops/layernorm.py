@@ -57,6 +57,8 @@ def vllm_kunlun_forward_cuda(
         )
         return out
 
+RMSNorm.forward_cuda = vllm_kunlun_forward_cuda
+RMSNorm.forward = vllm_kunlun_forward_cuda
 
 class KunlunGemmaRMSNorm(OriGemmaRMSNorm):
     @staticmethod
