@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from typing import Optional
-import os
+
 import torch
 import torch.nn as nn
 from packaging import version
@@ -11,6 +11,7 @@ from vllm import envs
 from vllm.logger import init_logger
 from vllm.platforms import current_platform
 import xtorch_ops
+import os
 
 logger = init_logger(__name__)
 
@@ -24,9 +25,11 @@ class TopKTopPSampler(nn.Module):
 
     def __init__(self, logprobs_mode):
         super().__init__()
+        self.logprobs_mode = logprobs_mode
         logger.info_once(
             "Using FlashInfer for top-p & top-k sampling.")
         self.forward = self.forward_kunlun
+        self.apply_top_k_top_p = apply_top_k_top_p
 
     def forward_native(
         self,
@@ -40,9 +43,14 @@ class TopKTopPSampler(nn.Module):
 
         The logits tensor may be updated in-place.
         """
-        logits = apply_top_k_top_p(logits, k, p)
+        logits = self.apply_top_k_top_p(logits, k, p)
+        logits_to_return = None
+        if self.logprobs_mode == "processed_logits":
+            logits_to_return = logits
+        elif self.logprobs_mode == "processed_logprobs":
+            logits_to_return = logits.log_softmax(dim=-1, dtype=torch.float32)
         probs = logits.softmax(dim=-1, dtype=torch.float32)
-        return random_sample(probs, generators), None
+        return random_sample(probs, generators), logits_to_return
 
     def forward_kunlun(
         self,
@@ -53,13 +61,12 @@ class TopKTopPSampler(nn.Module):
     ) -> tuple[torch.Tensor, torch.Tensor | None]:
         """More optimized implementation for top-k and top-p sampling."""
         if (k is None and p is None) or generators:
-            # We prefer `random_sample` over `flashinfer_sample` when sorting is
-            # not needed. This is because `random_sample` does not require
-            # CPU-GPU synchronization while `flashinfer_sample` does.
             if generators:
-                logger.warning_once("FlashInfer 0.2.3+ does not support "
-                                    "per-request generators. Falling back to "
-                                    "PyTorch-native implementation.")
+                logger.debug_once(
+                    "FlashInfer 0.2.3+ does not support "
+                    "per-request generators. Falling back to "
+                    "PyTorch-native implementation."
+                )
             return self.forward_native(logits, generators, k, p)
         # flashinfer sampling functions expect contiguous logits.
         # In flex_attn/triton_attn fp32 inference, logits can be non-contiguous
@@ -201,6 +208,7 @@ def flashinfer_sample(
             probs, top_k=k, deterministic=True)
     else:
         # Both top-k and top-p.
+        k = k.to(torch.int32)
         next_token_ids = xtorch_ops.top_k_top_p_sampling_from_probs(
             probs, top_k=k, top_p=p, deterministic=True)
 

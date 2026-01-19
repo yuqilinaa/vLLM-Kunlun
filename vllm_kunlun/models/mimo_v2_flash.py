@@ -185,8 +185,7 @@ class MiMoV2MoE(nn.Module):
             gate_input = hidden_states
         router_logits = self.gate(gate_input)
         final_hidden_states = self.experts(
-            hidden_states=hidden_states, router_logits=router_logits, linear_weights=self.gate.weight
-        )
+            hidden_states=hidden_states, router_logits=router_logits)
 
         return final_hidden_states.squeeze(0) if is_input_1d else final_hidden_states
 

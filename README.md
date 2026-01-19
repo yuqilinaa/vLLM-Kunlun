@@ -1,7 +1,7 @@
 ![vLLM Kunlun Logo](vllm_kunlun/patches/vLLM_Kunlun.jpg)
 
 <p align="center">
-  <a href="https://vllm-kunlun.readthedocs.io"><b>  Documentation</b></a> |
+  <a href="https://vllm-kunlun.readthedocs.io/en/latest/"><b>  Documentation</b></a> |
   <a href="https://vllm-kunlun.readthedocs.io/en/latest/quick_start.html"><b>  Quick Start</b></a> |
   <a href="https://join.slack.com/t/vllm-kunlun/shared_invite/zt-3iinb8u5z-FcqZKbNNdMJ_32fHmipzvw"><b>  Slack</b></a>
 </p>
@@ -46,6 +46,22 @@ By utilizing the vLLM Kunlun plugin, popular open-source models, including Trans
   </thead>
   <tbody>
     <tr>
+      <td class="model-name">Qwen2</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">Qwen2.5</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
       <td class="model-name">Qwen3</td>
       <td class="status-support">✅</td>
       <td></td>
@@ -73,6 +89,62 @@ By utilizing the vLLM Kunlun plugin, popular open-source models, including Trans
       <td class="model-name">MiMo-V2-Flash</td>
       <td class="status-support">✅</td>
       <td></td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">Llama2</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">Llama3</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">Llama3.1</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">gpt-oss</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">DeepSeek-R1</td>
+      <td class="status-support">✅</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">DeepSeek-V3</td>
+      <td class="status-support">✅</td>
+      <td class="status-support">✅</td>
+      <td></td>
+      <td class="status-support">✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="model-name">DeepSeek-V3.2</td>
+      <td class="status-support">✅</td>
+      <td class="status-support">✅</td>
       <td></td>
       <td class="status-support">✅</td>
       <td></td>
@@ -120,7 +192,7 @@ Please use the following recommended versions to get started quickly:
 
 | Version | Release type | Doc |
 |----------|---------------|-----|
-| v0.11.0 | Latest stable version | [QuickStart](./docs/_build/html/quick_start.html) and [Installation](./docs/_build/html/installation.html) for more details |
+| v0.11.0 | Latest stable version | [QuickStart](https://vllm-kunlun.readthedocs.io/en/latest/quick_start.html) and [Installation](https://vllm-kunlun.readthedocs.io/en/latest/installation.html) for more details |
 
 ---
 
@@ -136,7 +208,7 @@ We opened the project at Dec 8, 2025. We love open source and collaboration ❤�
 
 ## Sponsors 👋
 
-We sincerely appreciate the [**KunLunXin**](https://www.kunlunxin.com/) team for their support in providing GPU resources, which enabled efficient model adaptation debugging, comprehensive end-to-end testing, and broader model compatibility.
+We sincerely appreciate the [**KunLunXin**](https://www.kunlunxin.com/) team for their support in providing XPU resources, which enabled efficient model adaptation debugging, comprehensive end-to-end testing, and broader model compatibility.
 
 ## License
 
